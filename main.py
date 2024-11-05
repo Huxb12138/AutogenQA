@@ -82,6 +82,7 @@ def change_base_url(state):
     DG_for_fu.BASE_URL = state.BASE_URL
 def change_api_key(state):
     DG_for_fu.API_KEY = state.API_KEY
+    DG_for_fu.change_API()
 
 def slider_change(state):
     DG_for_fu.temp = state.temp

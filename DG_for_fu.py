@@ -38,6 +38,10 @@ logger = logging.getLogger(__name__)
 # 初始化 OpenAI 客户端
 #client = OpenAI(base_url="https://localhost:11434/v1", api_key="ollama")  # 替换为你的 API 密钥
 client = OpenAI(base_url=BASE_URL, api_key=API_KEY)
+
+def change_API():
+    global client
+    client = OpenAI(base_url=BASE_URL, api_key=API_KEY)
 def read_file(file_path: str) -> str:
     with open(file_path, 'r', encoding='utf-8') as file:
         return file.read()
