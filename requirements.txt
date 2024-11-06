@@ -1,6 +1,5 @@
 backoff==2.2.1
 openai==1.54.0
-pandas==2.2.3
 pyarrow==17.0.0
 taipy==4.0.0
 taipy_common==4.0.0
