@@ -109,7 +109,7 @@ def generate_dataset(state):
 
                 print(first_line)
                 print(state.pause)
-                #entry = generate_single_entry(first_line, prompt,temp)
+                #entry = g2enerate_single_entry(first_line, prompt,temp)
                 entry = generate_single_entry(state.table_data_format["text"][index], prompt, temp)
 
 
