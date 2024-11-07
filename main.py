@@ -22,6 +22,7 @@ temp = DG_for_fu.temp
 total = 0
 status = ("warning", "目前处于暂停状态，继续生成请点击QA生成")
 count = 1
+
 Button_text = "编辑文档"
 BASE_URL = DG_for_fu.BASE_URL
 API_KEY = DG_for_fu.API_KEY
@@ -86,6 +87,9 @@ def change_api_key(state):
 
 def slider_change(state):
     DG_for_fu.temp = state.temp
+
+
+
 
 def active_prompt_edit(state):
     if state.prompt_editable == False:

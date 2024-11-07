@@ -15,7 +15,7 @@ import pandas as pd
 
 temp = 0.4
 BASE_URL = "https://api.together.xyz/v1"
-API_KEY = ""
+API_KEY = "e455ffc93d7cb4ede4282b7e127ade3888739b3d994b11478409e071cba7d659"
 prompt = f"""
     基于以下文本，生成1个用于指令数据集的高质量条目。条目应该直接关联到给定的文本内容，提出相关的问题或任务。
     请确保生成多样化的指令类型，例如：
@@ -93,10 +93,15 @@ def return_and_remove_first_line(text):
 def generate_dataset(state):
         text = state.rest_data
         rest = text
+        length = len(state.data.splitlines())
 
         while rest:
             if not state.pause:
+                index = state.count - 1
+                check = length - len(state.table_data_format["text"])
 
+                if check != 0:
+                    index = index - check
                 notify(state, 'info', f'正在生成第 {state.count} 个条目')
                 logger.info(f"  正在生成第 {state.count} 个条目")
                 state.rest_data = rest
@@ -104,20 +109,24 @@ def generate_dataset(state):
 
                 print(first_line)
                 print(state.pause)
-                entry = generate_single_entry(first_line, prompt,temp)
+                #entry = generate_single_entry(first_line, prompt,temp)
+                entry = generate_single_entry(state.table_data_format["text"][index], prompt, temp)
 
 
                 #if entry and all(key in entry for key in ['instruction', 'input', 'output', 'text']):
                 if entry and all(key in entry for key in ['instruction', 'input', 'output']):
+                    #state,table_data是json格式数据
                     state.table_data.append(entry)
                     notify(state, 'success', f'成功生成 1 个完整条目')
                     logger.info(f"  成功生成 1 个完整条目")
                     state.progress_value = 100 * state.count / len(state.data.splitlines())
-                    state.table_data_format["instruction"][state.count-1] = entry['instruction']
+                    #将json格式的entry中的各个数据插入table_data_format用于列表显示
+                    state.table_data_format["instruction"][index] = entry['instruction']
                     print(state.table_data)
-                    state.table_data_format["input"][state.count-1] = entry['input']
-                    state.table_data_format["output"][state.count-1] = entry['output']
+                    state.table_data_format["input"][index] = entry['input']
+                    state.table_data_format["output"][index] = entry['output']
                     state.count = state.count + 1
+                    #自等来更新数据，实现列表刷新
                     state.table_data_format = state.table_data_format
                 else:
                     logger.warning(f"  跳过不完整的条目")
