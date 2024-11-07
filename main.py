@@ -148,7 +148,7 @@ def refresh_table(state):
     state.data2 = state.data
 
 def load_txt_file(state):
-    with open(state.path, 'r') as f:
+    with open(state.path, 'r', encoding='utf-8') as f:
         state.data = f.read()
         refresh_table(state)
 
@@ -175,8 +175,6 @@ def after_download(state):
 def clean_text(text):
     cleaned_lines = []
     current_section = None
-    print(DG_for_fu.prompt)
-
     for line in text.split('\n'):
         line = line.strip()  # 去掉行首尾空白
         if re.match(r'^\d+\.\s*\d+', line):  # 如果是小节标题，包括可能的空格
@@ -192,6 +190,11 @@ def clean_text(text):
 
     return '\n'.join(cleaned_lines)
 
+
+
+
+
+
 def filter_lines(input_string):
     lines = input_string.splitlines()
     filtered_lines = []
@@ -200,8 +203,8 @@ def filter_lines(input_string):
         line = line.replace('本系统所提供的电子文本近供参考，请以正式标准出版物为准。','')
         line = line.replace('本系统所提供的电子文本仅供个人学习、研究之用，未经授权，禁止复制、发行、汇编、翻译或网络传播等，侵权必究。','')
         line = line.replace(' ', '')
-        if len(''.join(filter(str.isalpha, line))) >= 12:
-            filtered_lines.append(line)
+        print(line)
+        filtered_lines.append(line)
     return '\n'.join(filtered_lines)
 
 if __name__ == "__main__":
