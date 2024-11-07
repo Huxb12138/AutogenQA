@@ -106,10 +106,9 @@ def generate_dataset(state):
                 logger.info(f"  正在生成第 {state.count} 个条目")
                 state.rest_data = rest
                 first_line, rest = return_and_remove_first_line(rest)
-
                 print(first_line)
                 print(state.pause)
-                #entry = g2enerate_single_entry(first_line, prompt,temp)
+                #entry = generate_single_entry(first_line, prompt,temp)
                 entry = generate_single_entry(state.table_data_format["text"][index], prompt, temp)
 
 
