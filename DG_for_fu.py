@@ -59,10 +59,9 @@ def generate_single_entry(text: str, prompt, temp) -> Dict:
             max_tokens=8196
         )
         logger.info(f"API 响应: {response.choices[0].message.content}")
-
-        json_match = re.search(r'\{.*\}', response.choices[0].message.content, re.DOTALL)
+        json_match = re.search(r'^\{(.*)\}$', response.choices[0].message.content, re.DOTALL)
         if json_match:
-            entry = json.loads(json_match.group())
+            entry = json.loads(json_match.group().replace('\\', '\\\\'))
             required_keys = ['instruction', 'input', 'output']
             if isinstance(entry, dict) and all(key in entry for key in required_keys):
                 # 根据 input 是否为空来设置 text 字段
@@ -97,17 +96,15 @@ def generate_dataset(state):
 
         while rest:
             if not state.pause:
-                for index1, str in enumerate(state.table_data_format["input"]):
-                    if str is None:
+                for index1, str in enumerate(state.table_data_format["instruction"]):
+                    if str is None or len(str) == 0:
                         index = index1
                         break
-
                 notify(state, 'info', f'正在生成第 {state.count} 个条目')
                 logger.info(f"  正在生成第 {state.count} 个条目")
+
                 state.rest_data = rest
                 first_line, rest = return_and_remove_first_line(rest)
-                print(first_line)
-                print(state.pause)
                 #entry = generate_single_entry(first_line, prompt,temp)
                 entry = generate_single_entry(state.table_data_format["text"][index], prompt, temp)
 
@@ -121,7 +118,7 @@ def generate_dataset(state):
                     state.progress_value = 100 * state.count / len(state.data.splitlines())
                     #将json格式的entry中的各个数据插入table_data_format用于列表显示
                     state.table_data_format["instruction"][index] = entry['instruction']
-                    print(state.table_data)
+
                     state.table_data_format["input"][index] = entry['input']
                     state.table_data_format["output"][index] = entry['output']
                     state.count = state.count + 1

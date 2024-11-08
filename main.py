@@ -30,8 +30,6 @@ API_KEY = DG_for_fu.API_KEY
 root_md = "<|toggle|theme|>\n<center>\n<|navbar|>\n</center>"
 page1 = """
 
-
-
 <|{path}|file_selector|label=上传需要清理的文件|on_action=load_txt_file|extensions=.csv,.txt|>
 <|数据清理|button|on_action=button_pressed|>
 <|{path}|file_download|label=下载清洗后文件|on_action=after_download|>
