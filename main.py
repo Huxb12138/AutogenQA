@@ -1,6 +1,7 @@
 from taipy.gui import Gui, notify
 import re
 import DG_for_fu
+import pandas as pd
 path = None
 path2 = None
 data = None
@@ -54,7 +55,7 @@ page2 = """
 
 <|{progress_value}|progress|title=正在生成：{count-1}/{total}|title_anchor=top|show_value|linear=True|render={progressbar_show}|>
 <|{table_data_format}|table|rebuild=True|editable={not button_clickable}|downloadable=True|>
-
+<|保存至csv|button|on_action=save_csv|>
 
 """
 page3 = """
@@ -79,6 +80,12 @@ md = {
 
 # def load_csv_file(state):
 #     state.table_data = pd.read_csv(state.path2)
+
+# def save_csv(state):
+#     df = pd.DataFrame(state.table_data_format)
+#     df.to_csv('dataset.csv', encoding='utf-8', index=False)
+
+
 def change_base_url(state):
     DG_for_fu.BASE_URL = state.BASE_URL
 def change_api_key(state):

@@ -97,11 +97,11 @@ def generate_dataset(state):
 
         while rest:
             if not state.pause:
-                index = state.count - 1
-                check = length - len(state.table_data_format["text"])
+                for index1, str in enumerate(state.table_data_format["input"]):
+                    if str is None:
+                        index = index1
+                        break
 
-                if check != 0:
-                    index = index - check
                 notify(state, 'info', f'正在生成第 {state.count} 个条目')
                 logger.info(f"  正在生成第 {state.count} 个条目")
                 state.rest_data = rest
