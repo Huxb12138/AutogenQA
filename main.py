@@ -57,6 +57,12 @@ page2 = """
 
 """
 page3 = """
+
+
+
+"""
+
+page4 = """
 <|{Button_prompt_text}|button|on_action=active_prompt_edit|>
 
 <|{prompt_template}|input|multiline=True|width=1400|active={prompt_editable}|> 
@@ -72,7 +78,8 @@ md = {
     "/": root_md,
     "Text_Clean": page1,
     "QA_Gen": page2,
-    "Settings": page3,
+    "Card_Quest": page3,
+    "Settings": page4,
 }
 
 
@@ -186,7 +193,7 @@ def clean_text(text):
     current_section = None
     for line in text.split('\n'):
         line = line.strip()  # 去掉行首尾空白
-        if re.match(r'^\d+\.\s*\d+', line):  # 如果是小节标题，包括可能的空格
+        if re.match(r'^[\dA-Z]+\.\s*\d+', line):  # 如果是小节标题，包括可能的空格
             if current_section:  # 如果已有小节，保存当前小节
                 cleaned_lines.append(current_section)
             current_section = line  # 更新当前小节
