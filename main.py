@@ -1,6 +1,7 @@
 from taipy.gui import Gui, notify
 import re
 import DG_for_fu
+from pdfdeal.file_tools import auto_split_mds
 import pandas as pd
 path = None
 path2 = None
@@ -57,6 +58,7 @@ page2 = """
 
 """
 page3 = """
+<|{path}|file_selector|label=上传需要清理的文件|on_action=load_txt_file|extensions=.csv,.txt|>
 
 
 
@@ -89,6 +91,12 @@ md = {
 # def save_csv(state):
 #     df = pd.DataFrame(state.table_data_format)
 #     df.to_csv('dataset.csv', encoding='utf-8', index=False)
+class CARD:
+    def __init__(self, state):
+        table = state.table_data_format,
+        text = state.data,
+
+    # def chunk_create(self, state):
 
 
 def change_base_url(state):

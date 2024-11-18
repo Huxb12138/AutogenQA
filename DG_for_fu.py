@@ -15,7 +15,7 @@ import pandas as pd
 
 temp = 0.4
 BASE_URL = "https://api.together.xyz/v1"
-API_KEY = "e455ffc93d7cb4ede4282b7e127ade3888739b3d994b11478409e071cba7d659"
+API_KEY = ""
 prompt = f"""
     基于以下文本，生成1个用于指令数据集的高质量条目。条目应该直接关联到给定的文本内容，提出相关的问题或任务。
     请确保生成多样化的指令类型，例如：
